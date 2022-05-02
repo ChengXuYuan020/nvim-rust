@@ -161,6 +161,41 @@ packer.startup(
                     require("conf.nvim-cmp")
                 end
             }
+            -- 语法高亮
+            use {
+                "nvim-treesitter/nvim-treesitter",
+                run = {":TSupdate"},
+                requires = {
+                    "p00f/nvim-ts-rainbow" -- 彩虹括号
+                },
+                config = function()
+                    require("conf.nvim-treesitter")
+                end
+            }
+            -- 代码格式化
+            use {
+                "sbdchd/neoformat",
+                config = function()
+                    require("conf.neoformat")
+                end
+            }
+            -- view tree
+            use {
+                "liuchengxu/vista.vim",
+                config = function()
+                    require("conf.vista")
+                end
+            }
+            -- 代码注释
+--            use {
+--                "numToStr/Comment.nvim",
+--                requires = {
+--                    "JoosepAlviste/nvim-ts-context-commentstring"
+--                },
+--                config = function()
+--                    require("conf.Comment")
+--                end
+--            }
         end,
         -- 使用浮动窗口
         config = {
