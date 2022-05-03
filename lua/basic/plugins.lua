@@ -182,11 +182,17 @@ packer.startup(
                 end
             }
             use {
-                "wojciechkepka/vim-github-dark",
+                "tomasiser/vim-code-dark",
                 config = function()
-                    require("conf.vim-github-dark")
+                    require("conf.vim-code-dark")
                 end
             }
+--            use {
+--                "wojciechkepka/vim-github-dark",
+--                config = function()
+--                    require("conf.vim-github-dark")
+--                end
+--            }
             -- nvcode colorscheme
 --             use "christianchiarulli/nvcode-color-schemes.vim"
             -- 语法高亮
