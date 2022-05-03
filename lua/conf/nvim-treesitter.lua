@@ -45,3 +45,5 @@ require("nvim-treesitter.configs").setup(
         }
     }
 )
+--vim.g.nvcode_termcolors=256
+--vim.cmd([[colorscheme nvcode]])

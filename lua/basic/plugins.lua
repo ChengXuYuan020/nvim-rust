@@ -1,7 +1,22 @@
 ---@diagnostic disable: undefined-global
 -- https://github.com/wbthomason/packer.nvim
 
-local packer = require("packer")
+local packer = require("packer") packer.init {
+        auto_clean = true,
+        compile_on_sync = true,
+        display = {prompt_border = 'rounded'}
+}
+-- init config
+
+packer.init({
+        git = {clone_timeout = 288, default_url_format = "https://gitcode.net/mirrors/%s" },
+        max_job = 30,
+        display = {
+            open_fn = function()
+                return require("packer.util").float({ border = "single"})
+            end,
+        },
+})
 packer.startup(
     {
         -- 所有插件的安装都书写在 function 中
@@ -21,7 +36,7 @@ packer.startup(
                     require("conf.nvim-tree")
                 end
             }
-            use { "ellisonleao/gruvbox.nvim" }
+--            use { "ellisonleao/gruvbox.nvim" }
             use {
                   'nvim-lualine/lualine.nvim',
                   config = function()
@@ -161,6 +176,14 @@ packer.startup(
                     require("conf.nvim-cmp")
                 end
             }
+            use {
+                "wojciechkepka/vim-github-dark",
+                config = function()
+                    require("conf.vim-github-dark")
+                end
+            }
+            -- nvcode colorscheme
+--             use "christianchiarulli/nvcode-color-schemes.vim"
             -- 语法高亮
             use {
                 "nvim-treesitter/nvim-treesitter",
@@ -186,16 +209,41 @@ packer.startup(
                     require("conf.vista")
                 end
             }
-            -- 代码注释
+            -- roshnivim-cs colorscheme
 --            use {
---                "numToStr/Comment.nvim",
---                requires = {
---                    "JoosepAlviste/nvim-ts-context-commentstring"
---                },
+--                "shaeinst/roshnivim-cs",
 --                config = function()
---                    require("conf.Comment")
+--                    require("conf.rvcs")
 --                end
 --            }
+            -- 一款暗色主题
+--            use {
+--                "rebelot/kanagawa.nvim",
+--                config = function()
+--                    require("conf.kanagawa")
+--                end
+--            }
+            -- 优秀的暗色主题
+--            use {
+--                "catppuccin/nvim",
+--                -- 改个别名，因为它的名字是 nvim，可能会冲突
+--                as = "catppuccin",
+--                config = function()
+--                -- 插件加载完成后自动运行 lua/conf/catppuccin.lua 文件中的代码
+--                    require("conf.catppuccin")
+--                end
+--            }
+
+            -- 代码注释
+            use {
+                "numToStr/Comment.nvim",
+                requires = {
+                    "JoosepAlviste/nvim-ts-context-commentstring"
+                },
+                config = function()
+                    require("conf.Comment")
+                end
+            }
         end,
         -- 使用浮动窗口
         config = {
