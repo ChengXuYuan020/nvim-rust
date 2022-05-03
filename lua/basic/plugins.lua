@@ -7,6 +7,11 @@ local packer = require("packer") packer.init {
         display = {prompt_border = 'rounded'}
 }
 -- init config
+-- 调整插件的下载时长限制，并更换加速源
+-- default_url_format = "https://hub.fastgit.xyz/%s",
+-- default_url_format = "https://mirror.ghproxy.com/https://github.com/%s",
+-- default_url_format = "https://git@github.com:%s",
+-- default_url_format = "https://gitclone.com/github.com/%s",
 
 packer.init({
         git = {clone_timeout = 288, default_url_format = "https://gitcode.net/mirrors/%s" },
