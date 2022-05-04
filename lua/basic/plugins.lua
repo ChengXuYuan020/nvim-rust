@@ -78,6 +78,13 @@ packer.startup(
                     require("conf.nvim-autopairs")
                 end
             }
+            -- 快速更改单词
+            use {
+                "AndrewRadev/switch.vim",
+                config = function()
+                    require("conf.switch")
+                end
+            }
             -- 包裹修改
             use {
                 "ur4ltz/surround.nvim",
@@ -155,6 +162,13 @@ packer.startup(
                     require("conf.fidget")
                 end
             }
+            -- 显示网页色
+            use {
+                "norcalli/nvim-colorizer.lua",
+                config = function()
+                    require("conf.nvim-colorizer")
+                end
+            }
             -- 插入模式获得函数签名
             use {
                 "ray-x/lsp_signature.nvim",
@@ -196,29 +210,11 @@ packer.startup(
                 end
             }
             use {
-                "tanvirtin/monokai.nvim",
+                "Mofiqul/vscode.nvim",
                 config = function()
-                    require("conf.monokai")
+                    require("conf.vscode")
                 end
             }
-
---            use {
---                "tomasiser/vim-code-dark",
---                config = function()
---                    require("conf.vim-code-dark")
---                end
---            }
---              use {
---                "yianwillis/vimcdoc",
---            }
---            use {
---                "wojciechkepka/vim-github-dark",
---                config = function()
---                    require("conf.vim-github-dark")
---                end
---            }
-            -- nvcode colorscheme
---             use "christianchiarulli/nvcode-color-schemes.vim"
             -- 语法高亮
             use {
                 "nvim-treesitter/nvim-treesitter",
@@ -244,32 +240,7 @@ packer.startup(
                     require("conf.vista")
                 end
             }
-            -- roshnivim-cs colorscheme
---            use {
---                "shaeinst/roshnivim-cs",
---                config = function()
---                    require("conf.rvcs")
---                end
---            }
-            -- 一款暗色主题
---            use {
---                "rebelot/kanagawa.nvim",
---                config = function()
---                    require("conf.kanagawa")
---                end
---            }
-            -- 优秀的暗色主题
---            use {
---                "catppuccin/nvim",
---                -- 改个别名，因为它的名字是 nvim，可能会冲突
---                as = "catppuccin",
---                config = function()
---                -- 插件加载完成后自动运行 lua/conf/catppuccin.lua 文件中的代码
---                    require("conf.catppuccin")
---                end
---            }
-
-            -- 代码注释
+             -- 代码注释
             use {
                 "numToStr/Comment.nvim",
                 requires = {
