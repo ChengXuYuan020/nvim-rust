@@ -14,7 +14,7 @@ local packer = require("packer") packer.init {
 -- default_url_format = "https://gitclone.com/github.com/%s",
 
 packer.init({
-        git = {clone_timeout = 288, default_url_format = "https://gitcode.net/mirrors/%s" },
+        git = {clone_timeout = 288, default_url_format = "git@github.com:%s" },
         max_job = 30,
         display = {
             open_fn = function()
@@ -120,11 +120,25 @@ packer.startup(
                     require("conf.nvim-lspconfig")
                 end
             }
+            -- 快速跳转
+            use {
+                "phaazon/hop.nvim",
+                config = function()
+                    require("conf.hop")
+                end
+            }
             -- 自动安装 LSP
             use {
                 "williamboman/nvim-lsp-installer",
                 config = function()
                     require("conf.nvim-lsp-installer")
+                end
+            }
+            -- 精美弹窗
+            use {
+                "rcarriga/nvim-notify",
+                config = function()
+                    require("conf.nvim-notify")
                 end
             }
             -- LSP UI 美化
@@ -182,11 +196,21 @@ packer.startup(
                 end
             }
             use {
-                "tomasiser/vim-code-dark",
+                "tanvirtin/monokai.nvim",
                 config = function()
-                    require("conf.vim-code-dark")
+                    require("conf.monokai")
                 end
             }
+
+--            use {
+--                "tomasiser/vim-code-dark",
+--                config = function()
+--                    require("conf.vim-code-dark")
+--                end
+--            }
+--              use {
+--                "yianwillis/vimcdoc",
+--            }
 --            use {
 --                "wojciechkepka/vim-github-dark",
 --                config = function()
@@ -253,6 +277,39 @@ packer.startup(
                 },
                 config = function()
                     require("conf.Comment")
+                end
+            }
+            -- 自动会话管理
+            use {
+                "rmagatti/auto-session",
+                config = function()
+                    require("conf.auto-session")
+                end
+            }
+            -- 多光标模式
+            use {
+                "terryma/vim-multiple-cursors",
+                config = function()
+                    require("conf.vim-multiple-cursors")
+                end
+            }
+            -- 显示滚动条
+            use {
+                "petertriho/nvim-scrollbar",
+                config = function()
+                    require("conf.nvim-scrollbar")
+                end
+            }
+            -- 模糊查找
+            use {
+                "nvim-telescope/telescope.nvim",
+                requires = {
+                    "nvim-lua/plenary.nvim", -- Lua 开发模块
+                    "BurntSushi/ripgrep", -- 文字查找
+                    "sharkdp/fd" -- 文件查找
+                },
+                config = function()
+                    require("conf.telescope")
                 end
             }
         end,
