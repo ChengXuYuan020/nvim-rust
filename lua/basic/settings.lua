@@ -20,6 +20,8 @@ vim.o.number = true
 vim.o.relativenumber = true
 -- 设定光标上下两侧最少保留的屏幕行数
 vim.o.scrolloff = 10
+vim.o.incsearch = true
+vim.o.wrapscan = true
 -- 是否支持鼠标操作
 vim.o.mouse = "a"
 -- 是否启用系统剪切板
@@ -54,3 +56,7 @@ vim.o.foldenable = true
 vim.o.foldmethod = "indent"
 -- 指定代码折叠的最高层级为 100
 vim.o.foldlevel = 100
+vim.o.autoread = true
+vim.o.cmdheight = 1
+vim.o.iskeyword = "@,48-57,_,192-255"
+vim.opt_local.formatoptions = vim.opt_local.formatoptions - {"c", "r", "o"}
