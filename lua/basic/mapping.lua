@@ -77,9 +77,20 @@ mapping.global = {
     vim_dadbod_ui = {
         {{"n"}, "<leader>4", ":DBUIToggle<cr>", "silent"}
     },
+    neoformat = {
+        {{"n"}, "<leader>cf", "<cmd>Neoformat<cr>", "silent"}
+    },
+    switch = {
+        {{"n"}, "gs", ":Switch<cr>", "silent"}
+    },
     vim_vsnip = {
         {{"i", "s"}, "<s-tab>", "vsnip#jumpable(-1)?'<Plug>(vsnip-jump-prev)':'<s-tab>'", "expr|silent"},
         {{"i", "s"}, "<tab>", "vsnip#jumpable(1)? '<Plug>(vsnip-jump-next)':'<tab>'", "expr|silent"}
+    },
+    hop = {
+        {{"n", "v"}, "ss", "<cmd>HopWord<cr>", "silent"},
+        {{"n", "v"}, "sl", "<cmd>HopLine<cr>", "silent"},
+        {{"n", "v"}, "sc", "<cmd>HopChar1<cr>", "silent"}
     },
     toggleterm = {
         {{"n"}, "<leader>tt", "<cmd>lua require('toggleterm').term_toggle()<cr>", "silent"},
@@ -233,9 +244,22 @@ mapping.buffer = {
         {{"n"}, "}", "<cmd>AerialNext<cr>", "silent"},
         {{"n"}, "[[", "<cmd>AerialPrevUp<cr>", "silent"},
         {{"n"}, "]]", "<cmd>AerialNextUp<cr>", "silent"}
-   }
+   },
+    gitsigns = {
+        {{"n"}, "]c", "&diff ? ']c' : '<cmd>Gitsigns next_hunk<cr>'", "expr|silent"},
+        {{"n"}, "[c", "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<cr>'", "expr|silent"},
+        {{"n"}, "<leader>gR", "<cmd>Gitsigns reset_buffer<cr>", "silent"},
+        {{"n"}, "<leader>gh", "<cmd>lua require'gitsigns'.blame_line{full=true}<cr>", "silent"},
+        {{"n"}, "<leader>gl", "<cmd>Gitsigns toggle_current_line_blame<cr>", "silent"},
+        {{"n"}, "<leader>gd", "<cmd>Gitsigns toggle_deleted<cr>", "silent"},
+        {{"n"}, "<leader>gv", "<cmd>Gitsigns diffthis<cr>", "silent"},
+        {{"n", "v"}, "<leader>gr", "<cmd>Gitsigns reset_hunk<cr>", "silent"}
+    }
 }
 mapping.plugin = {
+    lsp_signature = {
+        toggle_key = "<c-j>"
+    },
     lspsaga = {
         quit = "<esc>",
         exec = "<cr>"

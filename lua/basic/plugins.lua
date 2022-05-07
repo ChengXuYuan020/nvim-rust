@@ -18,6 +18,13 @@ packer.startup(
 				require("conf.impatient")
 			end
 		}
+		use {
+			"rcarriga/nvim-notify",
+			after = {"impatient.nvim"},
+			config = function()
+				require("conf.nvim-notify")
+			end
+		}
 		-- nvim-tree
 		use {
 			"kyazdani42/nvim-tree.lua",
@@ -131,6 +138,13 @@ packer.startup(
 				require("conf.nvim-lsp-installer")
 			end
 		}
+		use {
+			"ray-x/lsp_signature.nvim",
+			after = {"impatient.nvim"},
+			config = function()
+				require("conf.lsp_signature")
+			end
+		}
 --		use {
 --			"simrat39/rust-tools.nvim",
 --			cmd = {"RustHoverActions","RustJoinLines"},
@@ -205,6 +219,15 @@ packer.startup(
 		use {
 			"kristijanhusak/vim-dadbod-completion",
 			after = {"nvim-cmp"},
+		}
+		use {
+			"tpope/vim-dadbod",
+			after = "impatient.nvim",
+		}
+		use {
+			"kristijanhusak/vim-dadbod-ui",
+			cmd = "DBUIToggle",
+			after = {"vim-dadbod"},
 			config = function()
 				require("conf.vim-dadbod-ui")
 			end
@@ -239,6 +262,83 @@ packer.startup(
 			after = {"impatient.nvim"},
 			config = function ()
 				require("conf.surround")
+			end
+		}
+		use {
+			"sbdchd/neoformat",
+			cmd = "Neoformat",
+			after = {"impatient.nvim"},
+			config = function()
+				require("conf.neoformat")
+			end
+		}
+		use {
+			"folke/which-key.nvim",
+			event = {"BufRead", "BufNewFile"},
+			after = {"impatient.nvim"},
+			config = function()
+				require("conf.which-key")
+			end
+		}
+		use {
+			"phaazon/hop.nvim",
+			module = "hop",
+			cmd = {"HopWord", "HopLine", "HopChar1"},
+			config = function()
+				require("conf.hop")
+			end
+		}
+		use {
+			"ethanholz/nvim-lastplace",
+			event = {"BufRead", "BufNewFile"},
+			after = {"impatient.nvim"},
+			config = function()
+				require("conf.nvim-lastplace")
+			end
+		}
+		use {
+			"AndrewRadev/switch.vim",
+			cmd = "Switch",
+			after = {"impatient.nvim"},
+			config = function()
+				require("conf.switch")
+			end
+		}
+		use {
+			"lukas-reineke/indent-blankline.nvim",
+			event = {"BufRead", "BufNewFile"},
+			after = {"impatient.nvim"},
+			config = function()
+				require("conf.indent-blankline")
+			end
+		}
+		use {
+			"windwp/nvim-ts-autotag",
+			event = {"InsertEnter"},
+			ft = {"html", "tsx", "svelte", "vue", "xml", "php5"},
+			after = {"impatient.nvim"},
+			config = function()
+				require("conf.nvim-ts-autotag")
+			end
+		}
+		use {
+			"mattn/emmet-vim",
+			ft = {"html", "javascript", "typescript", "vue", "xml", "jsx"},
+			after = "impatient.nvim",
+		}
+		use {
+			"davidgranstrom/nvim-markdown-preview",
+			ft = {"markdown"},
+			after = "impatient.nvim",
+			config = function()
+				require("conf.nvim-markdown-preview")
+			end
+		}
+		use {
+			"lewis6991/gitsigns.nvim",
+			after = {"nvim-treesitter", "plenary.nvim"},
+			config = function()
+				require("conf.gitsigns")
 			end
 		}
 
