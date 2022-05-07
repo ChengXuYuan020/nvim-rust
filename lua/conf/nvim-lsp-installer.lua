@@ -1,70 +1,55 @@
 -- https://github.com/williamboman/nvim-lsp-installer
 
+local mapping = require("basic.mapping")
+local notices = require("utils.notices")
+
 local lsp_installer_servers = require("nvim-lsp-installer.servers")
 
--- 使用 cmp_nvim_lsp 代替内置 omnifunc，获得更强的补全体验
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
--- WARN: 手动书写 LSP 配置文件
--- 名称：https://github.com/williamboman/nvim-lsp-installer#available-lsps
--- 配置：https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 local servers = {
-    -- 语言服务器名称：配置选项
-    sumneko_lua = require("lsp.sumneko_lua"),
-    rust_analyzer = require("lsp.rust_analyzer"),
-    -- pyright = require("lsp.pyright"),
-    tsserver = require("lsp.tsserver"),
-    html = require("lsp.html"),
-    cssls = require("lsp.cssls"),
-    -- gopls = require("lsp.gopls"),
-    jsonls = require("lsp.jsonls"),
-    zeta_note = require("lsp.zeta_note"),
-    -- sqls = require("lsp.sqls"),
-    vuels = require("lsp.vuels")
+    vimls = require("conf.lsp.vimls"),
+    sumneko_lua = require("conf.lsp.sumneko_lua"),
+--    pyright = require("conf.lsp.pyright"),
+    tsserver = require("conf.lsp.tsserver"),
+    html = require("conf.lsp.html"),
+    cssls = require("conf.lsp.cssls"),
+--    gopls = require("conf.lsp.gopls"),
+    jsonls = require("conf.lsp.jsonls"),
+    zeta_note = require("conf.lsp.zeta_note"),
+    vuels = require("conf.lsp.vuels"),
+    rust_analyzer = require("conf.lsp.rust-analyzer"),
 }
--- 这里是 LSP 服务启动后的按键加载
-local function attach(_, bufnr)
-    -- 跳转到定义（代替内置 LSP 的窗口，telescope 插件让跳转定义更方便）
-    vim.keybinds.bmap(bufnr, "n", "gd", "<cmd>Telescope lsp_definitions theme=dropdown<CR>", vim.keybinds.opts)
-    -- 列出光标下所有引用（代替内置 LSP 的窗口，telescope 插件让查看引用更方便）
-    vim.keybinds.bmap(bufnr, "n", "gr", "<cmd>Telescope lsp_references theme=dropdown<CR>", vim.keybinds.opts)
-    -- 工作区诊断（代替内置 LSP 的窗口，telescope 插件让工作区诊断更方便）
-    vim.keybinds.bmap(bufnr, "n", "go", "<cmd>Telescope diagnostics theme=dropdown<CR>", vim.keybinds.opts)
-    -- 显示代码可用操作（代替内置 LSP 的窗口，telescope 插件让代码行为更方便）
-    vim.keybinds.bmap(bufnr, "n", "<leader>ca", "<cmd>Telescope lsp_code_actions theme=dropdown<CR>", vim.keybinds.opts)
-    -- 变量重命名（代替内置 LSP 的窗口，Lspsaga 让变量重命名更美观）
-    vim.keybinds.bmap(bufnr, "n", "<leader>cn", "<cmd>Lspsaga rename<CR>", vim.keybinds.opts)
-    -- 查看帮助信息（代替内置 LSP 的窗口，Lspsaga 让查看帮助信息更美观）
-    vim.keybinds.bmap(bufnr, "n", "gh", "<cmd>Lspsaga hover_doc<CR>", vim.keybinds.opts)
-    -- 跳转到上一个问题（代替内置 LSP 的窗口，Lspsaga 让跳转问题更美观）
-    vim.keybinds.bmap(bufnr, "n", "g[", "<cmd>Lspsaga diagnostic_jump_prev<CR>", vim.keybinds.opts)
-    -- 跳转到下一个问题（代替内置 LSP 的窗口，Lspsaga 让跳转问题更美观）
-    vim.keybinds.bmap(bufnr, "n", "g]", "<cmd>Lspsaga diagnostic_jump_next<CR>", vim.keybinds.opts)
-    -- 悬浮窗口上翻页，由 Lspsaga 提供
-    vim.keybinds.bmap(
-        bufnr,
-        "n",
-        "<C-p>",
-        "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>",
-        vim.keybinds.opts
-    )
-    -- 悬浮窗口下翻页，由 Lspsaga 提供
-    vim.keybinds.bmap(
-        bufnr,
-        "n",
-        "<C-n>",
-        "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>",
-        vim.keybinds.opts
+
+local function disgnostic_settings()
+    -- diagnostic style customization
+    vim.diagnostic.config(
+        {
+            virtual_text = {
+                prefix = "●",
+                source = "always"
+            },
+            float = {
+                source = "always"
+            },
+            update_in_insert = false
+        }
     )
 end
 
--- 自动安装或启动 LanguageServers
+local function attach(client, bufnr)
+    require("aerial").on_attach(client, bufnr)
+    mapping.register("buffer", "nvim_lsp_installer", bufnr)
+    disgnostic_settings()
+end
+
+-- automatically install or start LanguageServers
 for server_name, server_options in pairs(servers) do
     local server_available, server = lsp_installer_servers.get_server(server_name)
-    -- 判断服务是否可用
+    -- determine if the service is available
     if server_available then
-        -- 判断服务是否准备就绪，若就绪则启动服务
+        -- determine whether the service is ready, if it is ready, start the service
         server:on_ready(
             function()
                 -- keybind
@@ -73,15 +58,18 @@ for server_name, server_options in pairs(servers) do
                 server_options.flags = {
                     debounce_text_changes = 150
                 }
-                -- 代替内置 omnifunc
+                -- instead of built-in omnifunc
                 server_options.capabilities = capabilities
-                -- 启动服务
                 server:setup(server_options)
             end
         )
-        -- 如果服务器没有下载，则通过 notify 插件弹出下载提示
+        -- auto install if language server is not ready
         if not server:is_installed() then
-            vim.notify("Install Language Server : " .. server_name, "WARN", {title = "Language Servers"})
+            vim.notify(
+                notices.language_server.download.message(server_name),
+                notices.language_server.download.level,
+                notices.language_server.download.options
+            )
             server:install()
         end
     end

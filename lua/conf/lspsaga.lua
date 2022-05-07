@@ -1,32 +1,33 @@
 -- https://github.com/tami5/lspsaga.nvim
 
+local icons = require("utils.icons")
+local mapping = require("basic.mapping")
+
 require("lspsaga").setup(
     {
-        -- 提示边框样式：round、single、double
+        -- round、single、double
         border_style = "round",
-        error_sign = " ",
-        warn_sign = " ",
-        hint_sign = " ",
-        infor_sign = " ",
+        error_sign = icons.diagnostics.error,
+        warn_sign = icons.diagnostics.warning,
+        infor_sign = icons.diagnostics.info,
+        hint_sign = icons.diagnostics.hint,
         diagnostic_header_icon = " ",
-        -- 正在写入的行提示
+        -- show current write line icons
         code_action_icon = " ",
         code_action_prompt = {
-            -- 显示写入行提示
-            -- 如果为 true ，则写代码时会在左侧行号栏中显示你所定义的图标
+            -- colose current write line hint
             enable = false,
             sign = true,
             sign_priority = 40,
             virtual_text = true
         },
-        -- 快捷键配置
         code_action_keys = {
-            quit = "<Esc>",
-            exec = "<CR>"
+            quit = mapping.plugin.lspsaga.quit,
+            exec = mapping.plugin.lspsaga.exec
         },
         rename_action_keys = {
-            quit = "<Esc>",
-            exec = "<CR>"
+            quit = mapping.plugin.lspsaga.quit,
+            exec = mapping.plugin.lspsaga.exec
         }
     }
 )

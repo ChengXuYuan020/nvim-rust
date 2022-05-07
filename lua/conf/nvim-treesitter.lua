@@ -1,49 +1,46 @@
 -- https://github.com/nvim-treesitter/nvim-treesitter
 -- https://github.com/p00f/nvim-ts-rainbow
+-- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
+
+local mapping = require("basic.mapping")
 
 require("nvim-treesitter.configs").setup(
     {
-        -- 安装的高亮支持来源
+        -- installed highlight support sources
         ensure_installed = {"html", "rust", "css", "vim", "lua", "javascript", "typescript"},
-        -- 同步下载高亮支持
+        -- synchronous download highlighting support
         sync_install = false,
-        -- 高亮相关
+        -- highlight related
         highlight = {
-            -- 启用高亮支持
             enable = true,
-            -- 使用 treesitter 高亮而不是 neovim 内置的高亮
+            -- disable built-in regex highlighting
             additional_vim_regex_highlighting = false
         },
-        -- 范围选择
+        -- incremental selection
         incremental_selection = {
             enable = true,
             keymaps = {
-                -- 初始化选择
-                init_selection = "<CR>",
-                -- 递增
-                node_incremental = "<CR>",
-                -- 递减
-                node_decremental = "<BS>",
-                -- 选择一个范围
-                scope_incremental = "<TAB>"
+                init_selection = mapping.plugin.nvim_treesitter.init_selection,
+                node_incremental = mapping.plugin.nvim_treesitter.node_incremental,
+                node_decremental = mapping.plugin.nvim_treesitter.node_decremental,
+                scope_incremental = mapping.plugin.nvim_treesitter.scope_incremental
             }
         },
-        -- 缩进，关闭
+        -- indent have bug in python
         indent = {
             enable = false
         },
-        -- 彩虹括号，由 nvim-ts-rainbow 插件提供
-        rainbow = {
-            enable = false,
-            extended_mode = true
-            -- colors = {}, -- table of hex strings
-            -- termcolors = {} -- table of colour name strings
-        },
-        -- 根据当前上下文定义文件类型，由 nvim-ts-context-commentstring 插件提供
+        -- nvim-ts-context-commentstring
         context_commentstring = {
             enable = true
+        },
+        -- nvim-ts-rainbow
+        rainbow = {
+            enable = true,
+            extended_mode = true
         }
     }
 )
---vim.g.nvcode_termcolors=256
---vim.cmd([[colorscheme nvcode]])
+
+-- vim.o.foldmethod = "expr"
+-- vim.o.foldexpr = "nvim_treesitter#foldexpr()"

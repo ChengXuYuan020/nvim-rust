@@ -1,32 +1,26 @@
 -- https://github.com/numToStr/Comment.nvim
 -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
 
+local mapping = require("basic.mapping")
+
 local comment_string = require("ts_context_commentstring")
 
 require("Comment").setup(
     {
         toggler = {
-            -- 切换行注释
-            line = "gcc",
-            --- 切换块注释
-            block = "gCC"
+            line = mapping.plugin.comment.normal_line_toggle,
+            block = mapping.plugin.comment.normal_block_toggle
         },
         opleader = {
-            -- 可视模式下的行注释
-            line = "gc",
-            -- 可视模式下的块注释
-            block = "gC"
+            line = mapping.plugin.comment.visual_line_toggle,
+            block = mapping.plugin.comment.visual_block_toggle
         },
         extra = {
-            -- 在当前行上方新增行注释
-            above = "gcO",
-            -- 在当前行下方新增行注释
-            below = "gco",
-            -- 在当前行行尾新增行注释
-            eol = "gcA"
+            above = mapping.plugin.comment.normal_prev_rows,
+            below = mapping.plugin.comment.normal_next_rows,
+            eol = mapping.plugin.comment.noremal_end_line
         },
-        -- 根据当前光标所在上下文判断不同类别的注释
-        -- 由 nvim-ts-context-commentstring  提供
+        --  nvim-ts-context-commentstring settings
         pre_hook = function(ctx)
             -- Only calculate commentstring for tsx filetypes
             if vim.bo.filetype == "typescriptreact" then
