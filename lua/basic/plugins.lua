@@ -3,7 +3,7 @@ local packer = require("packer")
 packer.startup(
 {
 	-- 所有插件的安装都书写在 function 中
-        function()
+        function(use)
 		-- 包管理器
         	use {
                 	"wbthomason/packer.nvim"
@@ -38,6 +38,11 @@ packer.startup(
 			config = function()
 				require("conf.bufferline")
 			end
+		}
+		use {
+			"famiu/bufdelete.nvim",
+			after = {"bufferline.nvim"},
+			cmd = {"Bdelete"},
 		}
 		-- 优秀的暗色主题
 		use {
@@ -92,6 +97,11 @@ packer.startup(
 			end
 		}
 		use {
+			"nvim-lua/plenary.nvim",
+			event = {"BufRead", "BufNewFile"},
+			after = {"impatient.nvim"},
+		}
+		use {
 			"onsails/lspkind-nvim",
 			after = "impatient.nvim",
 			config = function()
@@ -121,6 +131,14 @@ packer.startup(
 				require("conf.nvim-lsp-installer")
 			end
 		}
+--		use {
+--			"simrat39/rust-tools.nvim",
+--			cmd = {"RustHoverActions","RustJoinLines"},
+--			after = "nvim-lspconfig",
+--			config = function ()
+--				require("conf.rust-tools")
+--			end
+--		}
 		use {
 			"j-hui/fidget.nvim",
 			after = {"nvim-lsp-installer"},
@@ -199,6 +217,30 @@ packer.startup(
 				require("conf.telescope")
 			end
 		}
+		use {
+			"akinsho/toggleterm.nvim",
+			module = "toggleterm",
+			after = {"impatient.nvim"},
+			config = function ()
+				require("conf.toggleterm")
+			end
+		}
+		use {
+			"windwp/nvim-autopairs",
+			event = {"InsertEnter"},
+			after = {"impatient.nvim"},
+			config = function ()
+				require("conf.nvim-autopairs")
+			end
+		}
+		use {
+			"ur4ltz/surround.nvim",
+			event = {"BufRead", "BufNewFile"},
+			after = {"impatient.nvim"},
+			config = function ()
+				require("conf.surround")
+			end
+		}
 
 
 
@@ -212,7 +254,7 @@ packer.startup(
                 open_fn = require("packer.util").float
             }
         }
-}    
+}
 )
 -- 实时生效配置
 vim.cmd(
