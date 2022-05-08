@@ -73,9 +73,9 @@ packer.startup(
 		use {
 			"SmiteshP/nvim-gps",
 			after = "nvim-treesitter",
-			config = function()
-				require("conf.lualine")
-			end
+--			config = function()
+--				require("conf.lualine")
+--			end
 		}
 		use {
 			"nvim-lualine/lualine.nvim",

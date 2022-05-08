@@ -53,7 +53,7 @@ require("lualine").setup(
                 {
                     "fileformat",
                     symbols = {
-                        unix = " ", -- e712
+                        unix = " ", -- e712
                         dos = " ", -- e70f
                         mac = " " -- e711
                     },
@@ -101,9 +101,9 @@ require("lualine").setup(
                     fmt = trunc(37, 0, nil, true)
                 },
                 {
-                    gps.get_location,
                     cond = gps.is_available,
-                    fmt = trunc(120, 0, nil, true)
+                    gps.get_location,
+                   -- fmt = trunc(120, 0, nil, true)
                 }
             },
             lualine_x = {
