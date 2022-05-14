@@ -25,7 +25,7 @@ vim.o.wrapscan = true
 -- 是否支持鼠标操作
 vim.o.mouse = "a"
 -- 是否启用系统剪切板
--- vim.o.clipboard = "unnamedplus"
+vim.o.clipboard = "unnamedplus"
 -- 是否开启备份文件
 vim.o.backup = false
 -- 是否开启交换文件

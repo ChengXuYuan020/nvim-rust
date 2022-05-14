@@ -79,7 +79,7 @@ packer.startup(
 		}
 		use {
 			"nvim-lualine/lualine.nvim",
-			after = "nvim-web-devicons",
+			after = {"nvim-web-devicons","nvim-gps"},
 			config = function()
 				require("conf.lualine")
 			end
@@ -176,7 +176,7 @@ packer.startup(
 		}
 		use {
 			"kosayoda/nvim-lightbulb",
-			after = {"nvim-lsp-installer"},
+			after = {"fidget.nvim"},
 			config = function()
 				require("conf.nvim-lightbulb")
 			end
